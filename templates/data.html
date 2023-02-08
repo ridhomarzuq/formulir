@@ -1,0 +1,112 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data</title>
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    html,body{height: 100%;}
+    .bg-utama{
+        background-image: url(/static/image/WhatsApp\ Image\ 2023-01-28\ at\ 12.13.39.jpeg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        display: table;
+        vertical-align: middle;
+       
+    }
+    .text{
+
+        background-color: rgb(15, 158, 235);
+    }
+   
+</style>
+</head>
+
+<body>
+
+<div class="bg-utama">
+<div class="ditengah">
+    <h2> PT RIZKY VALUZI SEJAHTERA </h1>
+        {% if user.is_authenticated %}
+    <p>halo, <strong>{{ user }}</strong>!<a href="{% url 'logout' %}" class="nav-link text-white">Keluar</a></p>
+    {% endif %}
+</div>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-xl-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr class="text text-white">
+                        <th>Nama Lengkap</th>
+                        <th>Alamat Lengkap</th>
+                        <th>Asal Perusahaan</th>
+                        <th>Jenis Alat</th>
+                        <th>Kelas</th>
+                        <th>KTP</th>
+                        <th>CV</th>
+                        <th>Pass Foto</th>
+                        <th>Ijazah Terakhir</th>
+                        <th>Surat Pernyataan Akan Mengikuti Pembinaan</th>
+                        <th>Surat Keterangan Kerja(Jika Bekerja)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Formulir in isi %}
+                    <tr>
+                        <td>{{ Formulir.Nama }}</td>
+                        <td>{{ Formulir.Alamat }}</td>
+                        <td>{{ Formulir.Asal_perusahaan }}</td>
+                        <td>{{ Formulir.Jenis_Alat }}</td>
+                        <td>{{ Formulir.kelas }}</td>
+                        <td>{% if Formulir.KTP %}
+                            <img src="{{ Formulir.KTP.url }}" width="80px">
+                                {% endif %}
+                        </td>
+                        <td>{% if Formulir.CV %}
+                            <embed src="{{ Formulir.CV.url }}" type="applicaton/pdf" width="90px">
+                                {% endif %}
+                        </td>
+                        <td>{%  if Formulir.Foto %}
+                            <img src="{{ Formulir.Foto.url }}" width="80px">
+                            {% endif %}</td>
+                        <td>{% if Formulir.Ijazah %}
+                            <object src="{{ Formulir.Ijazah.url }}" type="applicaton/pdf" width="80px">
+                                {% endif %}</td>
+                        <td>{% if Formulir.SuratPernyataan %}
+                            <object src="{{ Formulir.SuratPernyataan.url }}" type="applicaton/pdf" width="80px">
+                                {% endif %}</td>
+                        <td>{% if Formulir.Keterangan_Kerja %}
+                            <object src="{{ Formulir.Keterangan_Kerja.url }}" type="applicaton/pdf" width="80px">
+                                {% endif %}</td>
+                        <td>
+                            <a href="{% url 'hapus_form' Formulir.id %}" class="btn btn-danger">Hapus</a>
+                            <a href="{% url 'ubah_form' Formulir.id %}" class="btn btn-primary">Ubah</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody >
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+
+
+
+{% endblock %}

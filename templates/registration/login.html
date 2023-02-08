@@ -1,0 +1,72 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data</title>
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    html,body{height: 100%;}
+    .bg-utama{
+        background-image: url(/static/image/WhatsApp\ Image\ 2023-01-28\ at\ 12.13.39.jpeg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        display: table;
+        vertical-align: middle;
+    
+    }
+   
+</style>
+</head>
+
+<body>
+
+<div class="bg-utama">
+<div class="ditengah">
+    <h2>PT RIZKY VALUZI SEJAHTERA </h1>
+</div>
+{% if user.is_authenticated %}
+<meta http-equiv="refresh" content="0; url={% url 'formulir' %}">
+{% else %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container justify-content-center">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Login
+                </div>
+                <div class="card-body">
+                <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br>
+                <button class="btn btn-primary">Login</button>
+            </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+</div>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+
+
+
+{% endblock %}
